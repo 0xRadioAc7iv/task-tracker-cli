@@ -1,0 +1,22 @@
+{
+  "name": "task-tracker-cli",
+  "version": "0.0.1",
+  "main": "./bin/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "cli-tools"
+  ],
+  "author": "Manav Gadhiya",
+  "license": "MIT",
+  "description": "A CLI Tool to track and manage tasks",
+  "dependencies": {
+    "commander": "^12.1.0"
+  },
+  "bin": {
+    "task": "./bin/index.js"
+  }
+}
