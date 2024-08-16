@@ -1,13 +1,37 @@
-import fs from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
+import { readFile, writeFile } from "node:fs/promises";
+import { tasksFile } from "../constants.js";
 
-export function addTask(description) {
-  if (!fs.existsSync("tasks.json")) {
-    fs.writeFileSync("tasks.json", JSON.stringify({}));
+export async function addTask(description, status) {
+  if (!existsSync(tasksFile)) {
+    writeFileSync(tasksFile, JSON.stringify({ nextId: 1, tasks: {} }));
   }
 
-  fs.readFile("tasks.json", function (err, data) {
-    if (err) throw err;
+  if (!description) {
+    console.log("Error: Please enter a task description");
+    return;
+  }
 
-    console.log(JSON.parse(data));
-  });
+  if (status && status !== "in-progress") {
+    console.log(status);
+    console.log("Error: Incorrect value for task status");
+    return;
+  }
+
+  try {
+    const file = await readFile(tasksFile);
+    const data = JSON.parse(file.toString());
+
+    data.tasks[data.nextId] = {
+      description: description,
+      status: status || "todo",
+      createdAt: Date.now(),
+      updatedAt: null,
+    };
+
+    data.nextId++;
+    await writeFile(tasksFile, JSON.stringify(data));
+  } catch (error) {
+    console.log(error);
+  }
 }

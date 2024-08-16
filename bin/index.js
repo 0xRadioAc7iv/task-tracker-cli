@@ -11,7 +11,7 @@ program
   .version("0.0.1");
 
 program
-  .command("add <description>")
+  .command("add <description> [status]")
   .description("Add a new task")
   .action(addTask);
 
