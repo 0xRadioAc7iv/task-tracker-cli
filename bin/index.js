@@ -3,6 +3,7 @@
 import { Command } from "commander";
 import { addTask } from "../commands/addTask.js";
 import { updateTask } from "../commands/updateTask.js";
+import { deleteTask } from "../commands/deleteTask.js";
 
 const program = new Command();
 
@@ -20,5 +21,7 @@ program
   .command("update <id> <description>")
   .description("Update a task")
   .action(updateTask);
+
+program.command("delete <id>").description("Delete a task").action(deleteTask);
 
 program.parse();
