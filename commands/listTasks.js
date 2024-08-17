@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { tasksFile } from "../constants.js";
 
@@ -8,6 +8,7 @@ export async function listTasks(status) {
     console.log(
       "Created a new file! run `task add 'description'` to add your tasks."
     );
+    return;
   }
 
   try {
