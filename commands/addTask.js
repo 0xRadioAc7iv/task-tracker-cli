@@ -13,8 +13,7 @@ export async function addTask(description, status) {
   }
 
   if (status && status !== "in-progress") {
-    console.log(status);
-    console.log("Error: Incorrect value for task status");
+    console.log(`Error: Incorrect value '${status}' for task status`);
     return;
   }
 
