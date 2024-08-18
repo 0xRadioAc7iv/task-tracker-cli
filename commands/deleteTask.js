@@ -1,15 +1,22 @@
 import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { tasksFile } from "../constants.js";
+import chalk from "chalk";
+import { confirm } from "@inquirer/prompts";
 
 export async function deleteTask(id) {
   if (!existsSync(tasksFile)) {
-    console.log("Error: There are no tasks to delete");
+    console.log(chalk.red("Error: There are no tasks to delete"));
+    console.log(
+      chalk.green(
+        "Created a new file! run `task add 'description'` to add your tasks."
+      )
+    );
     return;
   }
 
   if (!id) {
-    console.log("Error: Please enter a task id");
+    console.log(chalk.red("Error: Please enter a task id"));
   }
 
   try {
@@ -17,14 +24,24 @@ export async function deleteTask(id) {
     const data = JSON.parse(file.toString());
 
     if (!data.tasks[id]) {
-      console.log(`Task with ID ${id} does not exist!`);
+      console.log(chalk.red(`Task with ID ${id} does not exist!`));
       return;
     }
 
-    delete data.tasks[id];
+    const taskDescription = data.tasks[id].description;
 
-    await writeFile(tasksFile, JSON.stringify(data));
+    const answer = await confirm({
+      message: `Are you sure you want to delete the task: ${taskDescription}?`,
+    });
+
+    if (answer) {
+      delete data.tasks[id];
+      await writeFile(tasksFile, JSON.stringify(data));
+      console.log(chalk.red(`Task deleted: ${taskDescription}`));
+    } else {
+      console.log(chalk.yellow("Task deletion cancelled"));
+    }
   } catch (error) {
-    console.log(error);
+    console.log(chalk.bgRed(error));
   }
 }

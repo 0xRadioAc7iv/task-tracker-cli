@@ -1,6 +1,7 @@
 import { existsSync, writeFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
 import { tasksFile } from "../constants.js";
+import chalk from "chalk";
 
 export async function addTask(description, status) {
   if (!existsSync(tasksFile)) {
@@ -8,12 +9,14 @@ export async function addTask(description, status) {
   }
 
   if (!description) {
-    console.log("Error: Please enter a task description");
+    console.log(chalk.red("Error: Please enter a task description"));
     return;
   }
 
   if (status && status !== "in-progress") {
-    console.log(`Error: Incorrect value '${status}' for task status`);
+    console.log(
+      chalk.red(`Error: Incorrect value '${status}' for task status`)
+    );
     return;
   }
 
@@ -30,7 +33,9 @@ export async function addTask(description, status) {
 
     data.nextId++;
     await writeFile(tasksFile, JSON.stringify(data));
+
+    console.log(chalk.green(`New Task added: ${description}`));
   } catch (error) {
-    console.log(error);
+    console.log(chalk.bgRed(error));
   }
 }
