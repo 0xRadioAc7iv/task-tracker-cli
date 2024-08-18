@@ -1,4 +1,4 @@
-# Task Manager CLI
+# Task Tracker CLI
 
 A Command-Line Interface (CLI) tool for tracking and managing tasks. This CLI allows users to add, update, delete, list, and mark tasks with ease.
 
