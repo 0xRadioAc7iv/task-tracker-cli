@@ -20,7 +20,7 @@ git clone https://github.com/0xRadioAc7iv/task-tracker-cli.git
 2.  **Navigate to the project directory:**
 
 ```bash
-cd task-manager-cli
+cd task-tracker-cli
 ```
 
 3.  **Install dependencies:**
