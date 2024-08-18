@@ -1,19 +1,26 @@
-import { existsSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
-import { tasksFile } from "../constants.js";
+import { tasksFile } from "../lib/constants.js";
 import chalk from "chalk";
 import { confirm } from "@inquirer/prompts";
+import { createNewFileIfDoesNotExist } from "../lib/createNewFileIfDoesNotExist.js";
 
+/**
+ * Deletes a task from the tasks file by ID.
+ *
+ * This function attempts to delete a task identified by the provided ID. It first checks if the
+ * tasks file exists and validates the ID. If the task exists, it prompts the user for confirmation
+ * before proceeding with deletion.
+ *
+ * @async
+ * @param {number} id - The ID of the task to delete.
+ *
+ * @example
+ * deleteTask(1);
+ * // Output (if confirmed): "Task deleted: Task description"
+ * // Output (if not confirmed): "Task deletion cancelled"
+ */
 export async function deleteTask(id) {
-  if (!existsSync(tasksFile)) {
-    console.log(chalk.red("Error: There are no tasks to delete"));
-    console.log(
-      chalk.green(
-        "Created a new file! run `task add 'description'` to add your tasks."
-      )
-    );
-    return;
-  }
+  if (createNewFileIfDoesNotExist()) return;
 
   if (!id) {
     console.log(chalk.red("Error: Please enter a task id"));

@@ -1,20 +1,25 @@
-import { existsSync, writeFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
-import { tasksFile } from "../constants.js";
+import { tasksFile } from "../lib/constants.js";
 import chalk from "chalk";
+import { createNewFileIfDoesNotExist } from "../lib/createNewFileIfDoesNotExist.js";
 
+/**
+ * Updates the description of a task by ID.
+ *
+ * This function modifies the description of a task specified by its ID.
+ * If the task exists, the description is updated and the changes are saved
+ * to the tasks file. The old and new descriptions are logged to the console.
+ *
+ * @async
+ * @param {number} id - The ID of the task to update.
+ * @param {string} description - The new description for the task.
+ *
+ * @example
+ * updateTask(1, "New task description");
+ * // Output: "Task updated successfully: Old description -> New task description"
+ */
 export async function updateTask(id, description) {
-  if (!existsSync(tasksFile)) {
-    console.log("Error: There are no tasks to update");
-    writeFileSync(tasksFile, JSON.stringify({ nextId: 1, tasks: {} }));
-    console.log(
-      chalk.green(
-        "Created a new file! run `task add 'description'` to add your tasks."
-      )
-    );
-
-    return;
-  }
+  if (createNewFileIfDoesNotExist()) return;
 
   if (!id) {
     console.log(chalk.red("Error: Please enter a task id"));

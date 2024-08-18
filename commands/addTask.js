@@ -1,12 +1,24 @@
-import { existsSync, writeFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
-import { tasksFile } from "../constants.js";
+import { tasksFile } from "../lib/constants.js";
 import chalk from "chalk";
+import { createNewFileIfDoesNotExist } from "../lib/createNewFileIfDoesNotExist.js";
 
+/**
+ * Adds a new task to the tasks file.
+ *
+ * This function adds a new task with the provided description and optional status to the tasks file.
+ * It ensures the tasks file exists, validates the inputs, and updates the tasks file with the new task.
+ *
+ * @async
+ * @param {string} description - The description of the task to be added.
+ * @param {string} [status="todo"] - The status of the task, either "todo" or "in-progress".
+ *
+ * @example
+ * addTask("Finish the report", "in-progress");
+ * // Output: "New Task added: Finish the report"
+ */
 export async function addTask(description, status) {
-  if (!existsSync(tasksFile)) {
-    writeFileSync(tasksFile, JSON.stringify({ nextId: 1, tasks: {} }));
-  }
+  createNewFileIfDoesNotExist();
 
   if (!description) {
     console.log(chalk.red("Error: Please enter a task description"));

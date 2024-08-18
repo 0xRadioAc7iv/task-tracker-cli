@@ -1,28 +1,28 @@
-import { existsSync, writeFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import { tasksFile } from "../constants.js";
+import { dateTimeOptions, tasksFile } from "../lib/constants.js";
 import chalk from "chalk";
 import { table } from "table";
+import { createNewFileIfDoesNotExist } from "../lib/createNewFileIfDoesNotExist.js";
 
-const dateTimeOptions = {
-  day: "numeric",
-  month: "long",
-  year: "numeric",
-  hour: "numeric",
-  minute: "numeric",
-  hour12: true,
-};
-
+/**
+ * Lists tasks from the tasks file, optionally filtered by status.
+ *
+ * This function retrieves and displays tasks stored in the tasks file. If a status is provided,
+ * it filters tasks based on that status. The tasks are displayed in a table format with columns
+ * for ID, Description, Status, Created at, and Updated at.
+ *
+ * @async
+ * @param {string} [status] - Optional task status to filter by ("todo", "done", or "in-progress").
+ *
+ * @example
+ * listTasks();
+ * // Output: A table with all tasks
+ *
+ * listTasks("todo");
+ * // Output: A table with tasks filtered by "todo" status
+ */
 export async function listTasks(status) {
-  if (!existsSync(tasksFile)) {
-    writeFileSync(tasksFile, JSON.stringify({ nextId: 1, tasks: {} }));
-    console.log(
-      chalk.green(
-        "Created a new file! run `task add 'description'` to add your tasks."
-      )
-    );
-    return;
-  }
+  if (createNewFileIfDoesNotExist()) return;
 
   try {
     const file = await readFile(tasksFile);
