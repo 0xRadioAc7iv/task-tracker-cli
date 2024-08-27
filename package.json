@@ -1,5 +1,5 @@
 {
-  "name": "task-manager-cli",
+  "name": "@radioac7iv/task-manager-cli",
   "version": "0.1.0",
   "main": "./bin/index.js",
   "type": "module",
