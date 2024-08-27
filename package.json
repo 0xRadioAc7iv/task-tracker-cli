@@ -1,5 +1,5 @@
 {
-  "name": "task-tracker-cli",
+  "name": "task-manager-cli",
   "version": "0.1.0",
   "main": "./bin/index.js",
   "type": "module",

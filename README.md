@@ -1,4 +1,4 @@
-# Task Tracker CLI
+# Task Manager CLI
 
 A Command-Line Interface (CLI) tool for tracking and managing tasks. This CLI allows users to add, update, delete, list, and mark tasks with ease.
 
@@ -128,7 +128,7 @@ git checkout -b feature/YourFeature
 3.  **Commit your changes:**
 
 ```bash
-git commit -am 'Add new feature'
+git commit -m 'Add new feature'
 ```
 
 4.  **Push to the branch:**
@@ -144,6 +144,7 @@ git push origin feature/YourFeature
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Project URL ([roadmap.sh](https://roadmap.sh))
+
 ```
 https://roadmap.sh/projects/task-tracker
 ```
